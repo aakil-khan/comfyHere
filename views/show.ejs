@@ -11,6 +11,17 @@
     <nav class="navbar">
         <div class="logo">WanderLust</div>
         <a href="/listings" class="back-btn"> ← All Listings </a> </nav>
+
+<% if (success && success.length > 0) { %>
+    <div class="alert alert-success">
+        <%= success[0] %>
+    </div>
+<% } %>
+<% if (error && error.length > 0) { %>
+    <div class="alert alert-error">
+        <%= error[0] %>
+    </div>
+<% } %>
     <main class="show-container">
         <div class="show-card">
             <div class="show-image-container">
@@ -23,9 +34,7 @@
                 <p class="small-title">LISTING DETAILS</p>
                 <h1><%= listing.title %></h1>
                 <i> Owned By <%= listing.owner.username %> </i> <br>
-                <p class="show-description">
-                    <%= listing.description %>
-                </p>
+                <p class="show-description"> <%= listing.description %> </p>
                 <div class="details">
                     <div class="detail-item">
                         <span>💰 Price</span>
@@ -46,46 +55,33 @@
                         </strong>
                     </div>
                 </div>
+             <%  if( currUser && currUser._id.equals(listing.owner._id)) { %>
                 <div class="action-buttons">
                     <a href="/listings/<%= listing._id %>/edit" class="edit-btn" > ✏️ Edit Listing
                     </a>
-                    <form
-                        method="POST"
-                        action="/listings/<%= listing._id %>?_method=DELETE" >
-                        <button
-                            type="submit"
-                            class="delete-btn"> 🗑️ Delete
-                        </button>
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" > <button type="submit"
+                        class="delete-btn"> 🗑️ Delete </button>
                     </form>
-                </div>
+                 </div>
+             <% } %>
+            
             </div>
         </div>
     </main>
-
+     
+   <% if(currUser) { %>
     <div class="review-container">
     <div class="review-card">
         <h4>Leave a review</h4>
         <form 
             action="/listings/<%= listing._id %>/reviews" method="POST">
-
             <div class="review-group">
                 <label for="rating">Rating</label>
-                <input
-                    type="range"
-                    min="1"
-                    max="5"
-                    id="rating"
-                    name="review[rating]"
-                    class="review-rating" >
-            </div>
+                <input type="range" min="1"  max="5"  id="rating"  name="review[rating]" class="review-rating" > </div>
             <div class="review-group">
                 <label for="comment">Comments</label>
                 <textarea
-                    name="review[comment]"
-                    id="comment"
-                    rows="6"
-                    required
-                    placeholder="Share your experience..." ></textarea>
+                  name="review[comment]"  id="comment"  rows="6"  required   placeholder="Share your experience..." ></textarea>
             </div>
             <button type="submit" class="review-submit">
                 Submit Review
@@ -93,6 +89,7 @@
         </form>
     </div>
 </div>
+<% } %>
 
      <div class="reviews-section">
 
@@ -103,33 +100,25 @@
         <div class="reviews-grid">
             <% listing.reviews.forEach(review => { %>
                 <div class="review-card">
-                    <div class="review-rating">
-                        ⭐ <%= review.rating %>/5
-                    </div>
-                    <p class="review-comment">
-                        <%= review.comment %>
-                    </p>
+                   <p><i>@<%= review.author.username %> </i> </p>
+                    <div class="review-rating">⭐ <%= review.rating %>/5 </div>
+                    <p class="review-comment"> <%= review.comment %></p>
                      <form method="POST"
                            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
                            <button type="submit" class="review-delete-btn">
-                            🗑️ Delete Review
-                           </button>
-        </form>
+                            🗑️ Delete Review </button>
+                      </form>
                 </div>
             <% }) %>
             
         </div>
     <% } %>
     
-
 </div>
 
 </div>
-
-
-
     <footer>
         <p>© 2026 WanderLust. All rights reserved.</p>
     </footer>
 </body>
-</html>
+</html> 
