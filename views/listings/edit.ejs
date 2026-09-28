@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Listing | WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">WanderLust</div>
+
+        <a href="/listings/<%= listing._id %>" class="back-btn">
+            ← Back to Listing
+        </a>
+    </nav>
+
+    <main class="form-container">
+
+        <div class="form-header">
+            <p class="small-title">WANDERLUST</p>
+            <h1>Edit Listing</h1>
+            <p>Update the details of your listing</p>
+        </div>
+
+        <form
+            action="/listings/<%= listing._id %>?_method=PUT"
+            method="POST"
+        >
+
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">
+                    Listing Title
+                </label>
+
+                <input
+                    id="title"
+                    name="listing[title]"
+                    value="<%= listing.title %>"
+                    type="text"
+                    required
+                >
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="listing[description]"
+                    required
+                ><%= listing.description %></textarea>
+            </div>
+
+            <!-- Image -->
+            <div class="form-group">
+                <label for="image">
+                    Image URL
+                </label>
+
+                <input
+                    id="image"
+                    name="listing[image]"
+                    value="<%= listing.image %>"
+                    type="url"
+                >
+
+                <small>
+                    Update the image URL if you want to change the listing image.
+                </small>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group">
+                <label for="price">
+                    Price per night
+                </label>
+
+                <input
+                    id="price"
+                    name="listing[price]"
+                    value="<%= listing.price %>"
+                    type="number"
+                    min="0"
+                    required
+                >
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label for="location">
+                    Location
+                </label>
+
+                <input
+                    id="location"
+                    name="listing[location]"
+                    value="<%= listing.location %>"
+                    type="text"
+                    required
+                >
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+                <label for="country">
+                    Country
+                </label>
+
+                <input
+                    id="country"
+                    name="listing[country]"
+                    value="<%= listing.country %>"
+                    type="text"
+                    required
+                >
+            </div>
+
+            <!-- Buttons -->
+            <div class="edit-actions">
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    ✓ Update Listing
+                </button>
+
+                <a
+                    href="/listings/<%= listing._id %>"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 WanderLust. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

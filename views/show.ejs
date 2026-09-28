@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= listing.title %> | WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">WanderLust</div>
+        <a href="/listings" class="back-btn"> ← All Listings </a> </nav>
+    <main class="show-container">
+        <div class="show-card">
+            <div class="show-image-container">
+                <img
+                    src="<%= listing.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6' %>"
+                    alt="<%= listing.title %>"
+                    class="show-image" >
+            </div>
+            <div class="show-content">
+                <p class="small-title">LISTING DETAILS</p>
+                <h1><%= listing.title %></h1>
+                <i> Owned By <%= listing.owner.username %> </i> <br>
+                <p class="show-description">
+                    <%= listing.description %>
+                </p>
+                <div class="details">
+                    <div class="detail-item">
+                        <span>💰 Price</span>
+                        <strong>
+                            ₹<%= listing.price.toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>📍 Location</span>
+                        <strong>
+                            <%= listing.location %>
+                        </strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>🌎 Country</span>
+                        <strong>
+                            <%= listing.country %>
+                        </strong>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="/listings/<%= listing._id %>/edit" class="edit-btn" > ✏️ Edit Listing
+                    </a>
+                    <form
+                        method="POST"
+                        action="/listings/<%= listing._id %>?_method=DELETE" >
+                        <button
+                            type="submit"
+                            class="delete-btn"> 🗑️ Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="review-container">
+    <div class="review-card">
+        <h4>Leave a review</h4>
+        <form 
+            action="/listings/<%= listing._id %>/reviews" method="POST">
+
+            <div class="review-group">
+                <label for="rating">Rating</label>
+                <input
+                    type="range"
+                    min="1"
+                    max="5"
+                    id="rating"
+                    name="review[rating]"
+                    class="review-rating" >
+            </div>
+            <div class="review-group">
+                <label for="comment">Comments</label>
+                <textarea
+                    name="review[comment]"
+                    id="comment"
+                    rows="6"
+                    required
+                    placeholder="Share your experience..." ></textarea>
+            </div>
+            <button type="submit" class="review-submit">
+                Submit Review
+            </button>
+        </form>
+    </div>
+</div>
+
+     <div class="reviews-section">
+
+    <h2>Reviews</h2>
+    <% if (!listing.reviews || listing.reviews.length === 0) { %>
+        <p class="no-reviews">No reviews yet.</p>
+    <% } else { %>
+        <div class="reviews-grid">
+            <% listing.reviews.forEach(review => { %>
+                <div class="review-card">
+                    <div class="review-rating">
+                        ⭐ <%= review.rating %>/5
+                    </div>
+                    <p class="review-comment">
+                        <%= review.comment %>
+                    </p>
+                     <form method="POST"
+                           action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                           <button type="submit" class="review-delete-btn">
+                            🗑️ Delete Review
+                           </button>
+        </form>
+                </div>
+            <% }) %>
+            
+        </div>
+    <% } %>
+    
+
+</div>
+
+</div>
+
+
+
+    <footer>
+        <p>© 2026 WanderLust. All rights reserved.</p>
+    </footer>
+</body>
+</html>

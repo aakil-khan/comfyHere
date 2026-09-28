@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Listings | WanderLust</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"> WanderLust </div>
+        <a href="/listings/new" class="create-btn">  Create Listing </a>
+        <div class="acc"> 
+          <%  if(!currUser) { %>
+            <a href="/signup" class="create-btn"> Sign up </a>
+             <a href="/login" class="create-btn"> Log in </a>
+          <% } %>
+          <%  if(currUser) { %>
+          <a href="/logout" class="create-btn"> Logout </a>
+           <% } %>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Success Message -->
+         <!-- Success Message -->
+         <% if (success && success.length > 0) { %>
+         <div class="success-message">
+         <%= success[0] %>
+          </div>
+        <% } %>
+        <div class="heading">
+            <h2>   Explore All Listings</h2>
+            <p>   Find your perfect stay ✨ </p>
+        </div>
+        <!-- Listings -->
+        <div class="listing-grid">
+            <% for(let list of allListings){ %>
+                <div class="listing-card">
+                    <!-- Image -->
+                    <div class="listing-image">
+                        <img  src="<%= list.image %>"  alt="<%= list.title %>" > </div>
+                    <!-- Content -->
+                    <div class="listing-content">
+             <h3> <%= list.title %>   </h3>
+                        <p class="listing-location">📍 <%= list.location %>, <%= list.country %>     </p>
+
+                        <p class="listing-price">
+                            ₹<%= list.price.toLocaleString("en-IN") %>
+                            <span>/ night</span>
+                        </p>
+                        <a   href="/listings/<%= list._id %>"
+                            class="view-btn" > View Listing →
+                        </a>
+                    </div>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>
+            © 2026 WanderLust. All rights reserved.
+        </p>
+    </footer>
+
+</body>
+
+</html>
+
+
+
+

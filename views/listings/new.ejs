@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Listing | WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar"> <div class="logo">  WanderLust </div>
+        <a href="/listings" class="back-btn"> All Listings
+        </a>
+    </nav>
+    <main class="form-container">
+        <div class="form-header">
+            <p class="small-title">  WANDERLUST
+            </p>
+            <h1>   Create a New Listing
+            </h1>
+            <p> Add a new place for travelers to discover ✨ </p>
+        </div>
+        <form method="POST" action="/listings">
+
+    <div class="form-group">
+        <label for="title">Listing Title</label>
+        <input
+            id="title"
+            name="listing[title]"
+            placeholder="Enter listing title"
+            type="text"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+            id="description"
+            name="listing[description]"
+            placeholder="Describe your listing..."
+            required
+        ></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="image">Image URL</label>
+        <input
+            id="image"
+            name="listing[image]"
+            placeholder="Enter image URL / link"
+            type="url">
+        <small>Paste a direct image URL.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price per night</label>
+        <input
+            id="price"
+            name="listing[price]"
+            placeholder="Enter price"
+            type="number"
+            min="0"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input
+            id="location"
+            name="listing[location]"
+            placeholder="Enter location"
+            type="text"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label for="country">Country</label>
+        <input
+            id="country"
+            name="listing[country]"
+            placeholder="Enter country"
+            type="text"
+            required>
+    </div>
+
+    <button type="submit" class="submit-btn">
+        + Add Listing
+    </button>
+
+</form>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 WanderLust. All rights reserved.</p>
+    </footer>
+</body>
+</html>
