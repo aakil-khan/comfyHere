@@ -12,7 +12,6 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo">WanderLust</div>
-
         <a href="/listings/<%= listing._id %>" class="back-btn">
             ← Back to Listing
         </a>
@@ -29,6 +28,7 @@
         <form
             action="/listings/<%= listing._id %>?_method=PUT"
             method="POST"
+            enctype="multipart/form-data"
         >
 
             <!-- Title -->
@@ -58,21 +58,24 @@
                     required
                 ><%= listing.description %></textarea>
             </div>
+           
+            <!-- original img-->
+             <div class="form-group1">
+                original Listing Image <br>
+                <img class="or-img" src=" <%= originalImageUrl %>" />
+             </div>
 
+             </div>
             <!-- Image -->
             <div class="form-group">
                 <label for="image">
                     Image URL
                 </label>
-
                 <input
                     id="image"
                     name="listing[image]"
-                    value="<%= listing.image %>"
-                    type="url"
-                >
-
-                <small>
+                    type="file">
+                 <small>
                     Update the image URL if you want to change the listing image.
                 </small>
             </div>

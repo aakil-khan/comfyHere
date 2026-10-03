@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Listing | WanderLust</title>
+    <title>Create Listing | ComfyHere</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar"> <div class="logo">  WanderLust </div>
+    <nav class="navbar"> <div class="logo">  ComfyHere </div>
         <a href="/listings" class="back-btn"> All Listings
         </a>
     </nav>
     <main class="form-container">
         <div class="form-header">
-            <p class="small-title">  WANDERLUST
+            <p class="small-title">  ComfyHere
             </p>
             <h1>   Create a New Listing
             </h1>
             <p> Add a new place for travelers to discover ✨ </p>
         </div>
-        <form method="POST" action="/listings">
+        <form method="POST" action="/listings" enctype="multipart/form-data">
 
     <div class="form-group">
         <label for="title">Listing Title</label>
@@ -42,14 +42,15 @@
         ></textarea>
     </div>
 
+
     <div class="form-group">
-        <label for="image">Image URL</label>
+        <label for="image">Upload Image </label>
         <input
             id="image"
-            name="listing[image]"
-            placeholder="Enter image URL / link"
-            type="url">
-        <small>Paste a direct image URL.</small>
+            name="listing[image]" 
+            type="file"
+             accept="image/*"
+             required>
     </div>
 
     <div class="form-group">
@@ -82,16 +83,35 @@
             type="text"
             required>
     </div>
+    <div class="form-group">
+    <label for="category">Category</label>
 
-    <button type="submit" class="submit-btn">
-        + Add Listing
-    </button>
+    <select
+        id="category"
+        name="listing[category]"
+        required>
+
+        <option value="">Select a category</option>
+        <option value="Rooms">Rooms</option>
+        <option value="Beach">Beach</option>
+        <option value="Mountains">Mountains</option>
+        <option value="Pool">Pool</option>
+        <option value="Cabins">Cabins</option>
+        <option value="Castles">Castles</option>
+        <option value="Nature">Nature</option>
+        <option value="Camping">Camping</option>
+        <option value="City">City</option>
+
+    </select>
+</div>
+
+    <button type="submit" class="submit-btn"> + Add Listing  </button>
 
 </form>
     </main>
     <!-- Footer -->
     <footer>
-        <p>© 2026 WanderLust. All rights reserved.</p>
+        <p>© 2026 ComfyHere. All rights reserved.</p>
     </footer>
 </body>
 </html>

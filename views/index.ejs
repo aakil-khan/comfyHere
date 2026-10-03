@@ -5,16 +5,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>All Listings | WanderLust</title>
-
+    <title>All Listings | ComfyHere</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo"> WanderLust </div>
+    <nav class="navbar" >
+        <a href="/listings" class="logo-link">
+            <img src="/images/comfyHere.png" alt="ComfyHere">
+
+         <!-- Search Bar -->
+    <form action="/listings" method="GET" class="search-bar">
+    <input
+        type="text"
+        name="search"
+        placeholder="Search destinations..."
+        value="<%= search || '' %>"
+    >
+    <button type="submit">🔍</button>
+</form>
+
         <a href="/listings/new" class="create-btn">  Create Listing </a>
+        <% if (currUser) { %>
+    <div class="user-badge">
+        <span class="user-icon">👤</span>
+        <span><%= currUser.username %></span>
+    </div>
+<% } %>
+
         <div class="acc"> 
           <%  if(!currUser) { %>
             <a href="/signup" class="create-btn"> Sign up </a>
@@ -25,26 +46,123 @@
            <% } %>
         </div>
     </nav>
+
+
+  <!-- Filters -->
+<div class="filter-bar">
+
+    <a href="/listings?category=Rooms"
+       class="filter <%= category === 'Rooms' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-house"></i>
+        </div>
+        <span>Rooms</span>
+    </a>
+
+    <a href="/listings?category=Beach"
+       class="filter <%= category === 'Beach' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-umbrella-beach"></i>
+        </div>
+        <span>Beach</span>
+    </a>
+
+    <a href="/listings?category=Mountains"
+       class="filter <%= category === 'Mountains' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-mountain"></i>
+        </div>
+        <span>Mountains</span>
+    </a>
+
+    <a href="/listings?category=Pool"
+       class="filter <%= category === 'Pool' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-person-swimming"></i>
+        </div>
+        <span>Pool</span>
+    </a>
+
+    <a href="/listings?category=Cabins"
+       class="filter <%= category === 'Cabins' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-house-chimney"></i>
+        </div>
+        <span>Cabins</span>
+    </a>
+
+    <a href="/listings?category=Castles"
+       class="filter <%= category === 'Castles' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-chess-rook"></i>
+        </div>
+        <span>Castles</span>
+    </a>
+
+    <a href="/listings?category=Nature"
+       class="filter <%= category === 'Nature' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-tree"></i>
+        </div>
+        <span>Nature</span>
+    </a>
+
+    <a href="/listings?category=Camping"
+       class="filter <%= category === 'Camping' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-campground"></i>
+        </div>
+        <span>Camping</span>
+    </a>
+
+    <a href="/listings?category=City"
+       class="filter <%= category === 'City' ? 'active' : '' %>">
+        <div class="filter-icon">
+            <i class="fa-solid fa-city"></i>
+        </div>
+        <span>City</span>
+    </a>
+
+</div>
+
     <!-- Main Content -->
     <main class="container">
-        <!-- Success Message -->
-         <!-- Success Message -->
          <% if (success && success.length > 0) { %>
          <div class="success-message">
          <%= success[0] %>
           </div>
         <% } %>
         <div class="heading">
-            <h2>   Explore All Listings</h2>
-            <p>   Find your perfect stay ✨ </p>
+
+    <% if (category) { %>
+        <div class="active-filter-label">
+            <span>Showing</span>
+            <strong><%= category %></strong>
         </div>
+        <h2><%= category %> Stays</h2>
+        <p>
+            Discover amazing <%= category.toLowerCase() %> stays 
+             <a href="/listings" class="clear-filter"> ✕ Clear filter </a>
+        </p>
+       
+    <% } else { %>
+        <h2>Explore All Stays</h2>
+        <p>  Find your perfect stay ✨</p>
+    <% } %>
+</div>
+
+<p class="result-count">
+    <%= allListings.length %>
+    <%= allListings.length === 1 ? 'stay' : 'stays' %>
+    found
+</p>
         <!-- Listings -->
         <div class="listing-grid">
             <% for(let list of allListings){ %>
                 <div class="listing-card">
                     <!-- Image -->
                     <div class="listing-image">
-                        <img  src="<%= list.image %>"  alt="<%= list.title %>" > </div>
+                        <img  src="<%= list.image.url %>"  alt="<%= list.title %>" > </div>
                     <!-- Content -->
                     <div class="listing-content">
              <h3> <%= list.title %>   </h3>
@@ -72,7 +190,7 @@
     <footer>
 
         <p>
-            © 2026 WanderLust. All rights reserved.
+            © 2026 ComfyHere. All rights reserved.
         </p>
     </footer>
 

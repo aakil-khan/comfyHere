@@ -3,14 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= listing.title %> | WanderLust</title>
+    <title><%= listing.title %> |ComfyHere</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.32.0/mapbox-gl.js">
+    </script>
+    <script>
+    let mapToken = "<%= mapToken %>";
+    let coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+    let listingTitle = "<%= listing.title %>";
+
+</script>
+
+
+
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">WanderLust</div>
-        <a href="/listings" class="back-btn"> ← All Listings </a> </nav>
+         <img src="/images/comfyHere.png" alt="ComfyHere">
+        <a href="/listings" class="back-btn"> ← All Listings </a>
+    
+       <% if (currUser) { %>
+    <div class="user-badge">
+        <span class="user-icon">👤</span>
+        <span><%= currUser.username %></span>
+    </div>
+<% } %>
+
+    </nav>
 
 <% if (success && success.length > 0) { %>
     <div class="alert alert-success">
@@ -26,7 +47,7 @@
         <div class="show-card">
             <div class="show-image-container">
                 <img
-                    src="<%= listing.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6' %>"
+                    src="<%= listing.image.url || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6' %>"
                     alt="<%= listing.title %>"
                     class="show-image" >
             </div>
@@ -75,9 +96,30 @@
         <h4>Leave a review</h4>
         <form 
             action="/listings/<%= listing._id %>/reviews" method="POST">
+        
             <div class="review-group">
-                <label for="rating">Rating</label>
-                <input type="range" min="1"  max="5"  id="rating"  name="review[rating]" class="review-rating" > </div>
+    <label>Rating</label>
+     
+    <div class="star-rating">
+
+    <input type="radio" id="star5" name="review[rating]" value="5">
+    <label for="star5">★</label>
+
+    <input type="radio" id="star4" name="review[rating]" value="4">
+    <label for="star4">★</label>
+
+    <input type="radio" id="star3" name="review[rating]" value="3">
+    <label for="star3">★</label>
+
+    <input type="radio" id="star2" name="review[rating]" value="2">
+    <label for="star2">★</label>
+
+    <input type="radio" id="star1" name="review[rating]" value="1" required>
+    <label for="star1">★</label>
+
+</div>
+  
+</div>
             <div class="review-group">
                 <label for="comment">Comments</label>
                 <textarea
@@ -115,10 +157,15 @@
     <% } %>
     
 </div>
+   <div class="reviews-section"> <h3> Where you'll be </h3>
+     <div id="map"></div>
+      <script src="/js/map.js"></script>
+     </div>
+
 
 </div>
     <footer>
-        <p>© 2026 WanderLust. All rights reserved.</p>
+        <p>© 2026 ComfyHere. All rights reserved.</p>
     </footer>
 </body>
 </html> 

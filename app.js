@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose"); 
@@ -10,11 +12,12 @@ const reviewRoute = require("./routes/review");
 const userRoute = require("./routes/user");
 
 const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-
+const dbUrl = process.env.ATLAS_DB_URL;
 
 main().then(() => {
     console.log("Mongodb Connected");
@@ -24,15 +27,25 @@ main().then(() => {
 });
  
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+  await mongoose.connect(dbUrl);
 }
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 3600
+});
+
+store.on("error",(err) => {
+    console.log("ERROR in MONGO SESSION STORE",err);
+});
+
 const sessionOptions = {
-   secret : "mysuoersecretkey",
-   resave : false,
-   saveUninitialized : true,
-   cookie : {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    store,
+    secret :  process.env.SESSION_SECRET,
+    resave : false,
+    saveUninitialized : true,
+    cookie : {
+  expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge :  7 * 24 * 60 * 60 * 1000,
     httpOnly : true,
    }
@@ -54,7 +67,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -62,23 +74,9 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
-// app.get("/demouser", async (req, res) => {
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student",
-//     });
-
-//     let registeredUser = await User.register(fakeUser, "helloworld");
-//     res.send(registeredUser);
-// });
-
-
 app.use("/listings",listingsRoute); 
 app.use("/listings/:id/reviews",reviewRoute);
 app.use("/",userRoute); 
-
 
 app.all("/{*splat}", (req,res,next) => {
     next(new ExpressError(404, "Page Not Found"));
