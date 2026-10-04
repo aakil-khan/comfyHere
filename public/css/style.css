@@ -3024,8 +3024,8 @@ body.dark-mode .error-container {
     border: none;
     background:#ff385c;
     color: #222;
-    width: 42px;
-    height: 42px;
+    width: 35px;
+    height: 35px;
     border-radius: 20%;
     cursor: pointer;
     font-size: 20px;
@@ -3455,27 +3455,22 @@ body {
    ========================================= */
 
 @media (max-width: 480px) {
-
     .navbar {
         padding: 10px;
         gap: 8px;
     }
-
     .navbar .logo-link img,
     .navbar > img {
         width: 155px;
         max-width: 155px;
     }
-
     .navbar .search-bar {
         height: 48px;
     }
-
     .navbar .search-bar input {
         min-width: 0;
         font-size: 14px;
     }
-
     .navbar .search-bar button {
         width: 48px;
         min-width: 48px;
@@ -3485,7 +3480,6 @@ body {
         font-size: 13px;
         padding: 8px 10px;
     }
-
     .navbar .acc .create-btn {
         font-size: 13px;
         padding: 8px 10px;
