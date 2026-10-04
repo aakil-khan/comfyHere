@@ -31,32 +31,15 @@ module.exports.isOwner = async (req, res, next) => {
 };
 
 
-// module.exports.validateListing = (req, res, next) => {
-//     let { error } = listingSchema.validate(req.body);
-//     if (error) {
-//         throw new ExpressError(400,error);
-//     } else {
-//         next();
-//     }
-// };
 module.exports.validateListing = (req, res, next) => {
-
-    console.log("========== VALIDATE LISTING ==========");
-    console.log("BODY:", req.body);
-
     let { error } = listingSchema.validate(req.body);
-
     if (error) {
-        console.error("❌ JOI VALIDATION ERROR:");
-        console.error(error.details);
-
-        throw new ExpressError(400, error.details[0].message);
+        throw new ExpressError(400,error);
+    } else {
+        next();
     }
-
-    console.log("✅ LISTING VALIDATION PASSED");
-
-    next();
 };
+
 
 module.exports.validateReview = (req, res, next) => {
     let { error } = reviewSchema.validate(req.body);

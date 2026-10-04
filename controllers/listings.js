@@ -45,106 +45,32 @@ module.exports.showListings = async (req, res) => {
     mapToken: process.env.MAP_TOKEN});
     }
 
-module.exports.createListings = async (req, res, next) => {
-    try {
 
-        console.log("========== CREATE LISTING ==========");
-        console.log("BODY:", req.body);
-        console.log("FILE:", req.file);
-        console.log("USER:", req.user?._id);
-
-        // Check image
+ module.exports.createListings = async (req, res, next) => {
         if (!req.file) {
-            console.log("❌ No file uploaded");
-
-            req.flash("error", "Please upload an image!");
-            return res.redirect("/listings/new");
-        }
-
-        // Check location
-        const location = req.body.listing.location;
-
-        console.log("LOCATION:", location);
-
-        // Geocoding
-        const response = await geocodingClient.forwardGeocode({
-            query: location,
-            limit: 1
-        }).send();
-
-        console.log("GEOCODING RESPONSE:", response.body.features);
-
-        if (response.body.features.length === 0) {
-            console.log("❌ Location not found");
-
-            req.flash("error", "Location not found!");
-            return res.redirect("/listings/new");
-        }
-
-        // Image
-        const url = req.file.path;
-        const filename = req.file.filename;
-
-        console.log("IMAGE URL:", url);
-        console.log("IMAGE FILENAME:", filename);
-
-        // Create listing
-        const newListing = new Listing(req.body.listing);
-
-        newListing.owner = req.user._id;
-
-        newListing.image = {
-            url: url,
-            filename: filename
-        };
-
-        newListing.geometry = response.body.features[0].geometry;
-
-        console.log("LISTING BEFORE SAVE:", newListing);
-
-        await newListing.save();
-
-        console.log("✅ LISTING SAVED:", newListing._id);
-
-        req.flash("success", "New Listing Created!");
-
-        res.redirect("/listings");
-
-    } catch (err) {
-
-        console.error("❌❌ CREATE LISTING ERROR ❌❌");
-        console.error(err);
-        console.error("MESSAGE:", err.message);
-        console.error("STACK:", err.stack);
-
-        next(err);
+        req.flash("error", "Please upload an image!");
+        return res.redirect("/listings/new");
     }
+    let response = await geocodingClient.forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1
+        })
+        .send();
+    if (response.body.features.length === 0) {
+        req.flash("error", "Location not found!");
+        return res.redirect("/listings/new");
+    }
+    let url = req.file.path;
+    let filename = req.file.filename;
+    const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    newListing.image = {url, filename
+    };
+    newListing.geometry = response.body.features[0].geometry;
+    await newListing.save();
+    req.flash("success", "New Listing Created!");
+    res.redirect("/listings");
 };
-//  module.exports.createListings = async (req, res, next) => {
-//         if (!req.file) {
-//         req.flash("error", "Please upload an image!");
-//         return res.redirect("/listings/new");
-//     }
-//     let response = await geocodingClient.forwardGeocode({
-//             query: req.body.listing.location,
-//             limit: 1
-//         })
-//         .send();
-//     if (response.body.features.length === 0) {
-//         req.flash("error", "Location not found!");
-//         return res.redirect("/listings/new");
-//     }
-//     let url = req.file.path;
-//     let filename = req.file.filename;
-//     const newListing = new Listing(req.body.listing);
-//     newListing.owner = req.user._id;
-//     newListing.image = {url, filename
-//     };
-//     newListing.geometry = response.body.features[0].geometry;
-//     await newListing.save();
-//     req.flash("success", "New Listing Created!");
-//     res.redirect("/listings");
-// };
 
 module.exports.updateListings = async (req, res) => {
     let { id } = req.params;
