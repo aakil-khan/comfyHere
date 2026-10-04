@@ -10,12 +10,43 @@ const upload = multer({ storage});
 
 router
     .route("/")
-    .get( wrapAsync(ListingController.index))
-    .post(isLoggedIn,
-        upload.single("listing[image]"),
-        validateListing,
-         wrapAsync(ListingController.createListings));
-   
+    .get(wrapAsync(ListingController.index))
+    .post(
+        isLoggedIn,
+
+        (req, res, next) => {
+            console.log("✅ 1. isLoggedIn PASSED");
+            next();
+        },
+        (req, res, next) => {
+            console.log("✅ 2. Starting multer");
+            upload.single("listing[image]")(req, res, function (err) {
+                if (err) {
+                    console.error("❌ MULTER ERROR:");
+                    console.error(err);
+                    return next(err);
+                }
+                console.log("✅ 3. MULTER PASSED");
+                console.log("FILE:", req.file);
+                next();
+            });
+        },
+        (req, res, next) => {
+            console.log("✅ 4. Starting validateListing");
+            try {
+                validateListing(req, res, next);
+            } catch (err) {
+                console.error("❌ VALIDATION ERROR:");
+                console.error(err);
+                next(err);
+            }
+        },
+        (req, res, next) => {
+            console.log("✅ 5. VALIDATION PASSED");
+            next();
+        },
+        wrapAsync(ListingController.createListings)
+    );
 
 //New route
 router.get("/new", isLoggedIn,  ListingController.RenderNewForm);
