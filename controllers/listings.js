@@ -47,58 +47,64 @@ module.exports.showListings = async (req, res) => {
 
 module.exports.createListings = async (req, res, next) => {
     try {
-        console.log("🔥 CREATE LISTING STARTED");
 
+        console.log("========== CREATE LISTING ==========");
         console.log("BODY:", req.body);
-        console.log("FILE EXISTS:", !!req.file);
+        console.log("FILE:", req.file);
+        console.log("USER:", req.user?._id);
 
+        // Check image
         if (!req.file) {
-            console.log("❌ NO FILE");
+            console.log("❌ No file uploaded");
+
             req.flash("error", "Please upload an image!");
             return res.redirect("/listings/new");
         }
 
-        console.log("✅ FILE RECEIVED");
+        // Check location
+        const location = req.body.listing.location;
 
-        console.log("LOCATION:", req.body.listing.location);
+        console.log("LOCATION:", location);
 
-        console.log("🗺️ STARTING MAPBOX GEOCODING");
-
-        let response = await geocodingClient.forwardGeocode({
-            query: req.body.listing.location,
+        // Geocoding
+        const response = await geocodingClient.forwardGeocode({
+            query: location,
             limit: 1
         }).send();
 
-        console.log("✅ MAPBOX RESPONSE RECEIVED");
+        console.log("GEOCODING RESPONSE:", response.body.features);
 
         if (response.body.features.length === 0) {
-            console.log("❌ LOCATION NOT FOUND");
+            console.log("❌ Location not found");
 
             req.flash("error", "Location not found!");
             return res.redirect("/listings/new");
         }
 
-        let url = req.file.path;
-        let filename = req.file.filename;
+        // Image
+        const url = req.file.path;
+        const filename = req.file.filename;
 
-        console.log("✅ IMAGE:", filename);
+        console.log("IMAGE URL:", url);
+        console.log("IMAGE FILENAME:", filename);
 
+        // Create listing
         const newListing = new Listing(req.body.listing);
 
         newListing.owner = req.user._id;
 
         newListing.image = {
-            url,
-            filename
+            url: url,
+            filename: filename
         };
 
         newListing.geometry = response.body.features[0].geometry;
 
-        console.log("💾 SAVING LISTING");
+        console.log("LISTING BEFORE SAVE:", newListing);
 
         await newListing.save();
 
-        console.log("✅ LISTING SAVED");
+        console.log("✅ LISTING SAVED:", newListing._id);
 
         req.flash("success", "New Listing Created!");
 
@@ -106,9 +112,10 @@ module.exports.createListings = async (req, res, next) => {
 
     } catch (err) {
 
-        console.error("🔥🔥 CREATE LISTING ERROR 🔥🔥");
+        console.error("❌❌ CREATE LISTING ERROR ❌❌");
         console.error(err);
-        console.error(err.stack);
+        console.error("MESSAGE:", err.message);
+        console.error("STACK:", err.stack);
 
         next(err);
     }
