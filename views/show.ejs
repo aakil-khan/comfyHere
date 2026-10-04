@@ -20,18 +20,17 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-         <img src="/images/logo.png" alt="ComfyHere">
-        <a href="/listings" class="back-btn"> ← All Listings </a>
-    
-       <% if (currUser) { %>
-    <div class="user-badge">
-        <span class="user-icon">👤</span>
-        <span><%= currUser.username %></span>
-    </div>
-<% } %>
-
-    </nav>
+<nav class="navbar">
+    <a href="/listings" class="logo-link">
+        <img src="/images/logo.png" alt="ComfyHere"></a>
+    <a href="/listings" class="back-btn">← All Listings</a>
+    <% if (currUser) { %>
+        <div class="user-badge">
+            <span class="user-icon">👤</span>
+            <span><%= currUser.username %></span>
+        </div>
+    <% } %>
+</nav>
 
 <% if (success && success.length > 0) { %>
     <div class="alert alert-success">

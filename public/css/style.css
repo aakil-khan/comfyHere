@@ -3048,3 +3048,163 @@ body.dark-mode .signup-form label,
 body.dark-mode .form-label {
     color: #222 !important;
 }
+
+
+
+
+/* =========================================
+   DARK MODE - SHOW / LISTING DETAILS PAGE
+   ========================================= */
+
+/* Main listing card */
+body.dark-mode .show-card {
+    background: #ffffff;
+    color: #222222;
+}
+
+/* Listing title */
+body.dark-mode .show-card h1 {
+    color: #222222 !important;
+}
+
+/* Owner */
+body.dark-mode .show-card i {
+    color: #666666 !important;
+}
+
+/* Description */
+body.dark-mode .show-description {
+    color: #555555 !important;
+}
+
+/* "LISTING DETAILS" */
+body.dark-mode .small-title {
+    color: #ff385c !important;
+}
+
+
+/* =========================================
+   PRICE / LOCATION / COUNTRY
+   ========================================= */
+
+body.dark-mode .details {
+    color: #222222;
+}
+
+body.dark-mode .detail-item {
+    background: #f5f5f5;
+    color: #222222;
+}
+
+body.dark-mode .detail-item span {
+    color: #555555 !important;
+}
+
+body.dark-mode .detail-item strong {
+    color: #222222 !important;
+}
+
+
+/* =========================================
+   EDIT / DELETE BUTTONS
+   ========================================= */
+
+body.dark-mode .edit-btn {
+    color: #ffffff !important;
+}
+
+body.dark-mode .delete-btn {
+    color: #ffffff !important;
+}
+
+
+/* =========================================
+   REVIEW FORM
+   ========================================= */
+
+body.dark-mode .review-card {
+    background: #ffffff;
+    color: #222222;
+}
+
+body.dark-mode .review-card h4 {
+    color: #222222 !important;
+}
+
+body.dark-mode .review-group label {
+    color: #555555 !important;
+}
+
+body.dark-mode .review-card textarea {
+    background: #f5f5f5;
+    color: #222222;
+    border: 1px solid #ddd;
+}
+
+body.dark-mode .review-card textarea::placeholder {
+    color: #777777;
+}
+
+
+/* =========================================
+   STAR RATING
+   ========================================= */
+
+body.dark-mode .star-rating label {
+    color: #cccccc;
+}
+
+
+/* =========================================
+   REVIEWS SECTION
+   ========================================= */
+
+body.dark-mode .reviews-section {
+    color: #ffffff;
+}
+
+body.dark-mode .reviews-section h2,
+body.dark-mode .reviews-section h3 {
+    color: #ffffff !important;
+}
+
+body.dark-mode .no-reviews {
+    color: #999999 !important;
+}
+
+
+/* Individual review cards */
+body.dark-mode .reviews-grid .review-card {
+    background: #ffffff;
+    color: #222222;
+}
+
+body.dark-mode .reviews-grid .review-card p {
+    color: #555555 !important;
+}
+
+body.dark-mode .review-rating {
+    color: #222222 !important;
+}
+
+body.dark-mode .review-comment {
+    color: #444444 !important;
+}
+
+
+/* =========================================
+   MAP
+   ========================================= */
+
+body.dark-mode #map {
+    border: 1px solid #444;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+body.dark-mode footer {
+    color: #aaaaaa;
+}
