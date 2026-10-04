@@ -3208,3 +3208,292 @@ body.dark-mode #map {
 body.dark-mode footer {
     color: #aaaaaa;
 }
+
+
+
+/* =========================================
+   FINAL NAVBAR OVERFLOW FIX
+   ========================================= */
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   NAVBAR
+   ========================= */
+
+.navbar {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 15px 4%;
+
+    overflow: hidden;
+}
+
+
+/* LOGO */
+
+.navbar .logo-link,
+.navbar > img {
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.navbar .logo-link img,
+.navbar > img {
+    width: 190px;
+    max-width: 190px;
+    height: auto;
+    display: block;
+}
+
+
+/* =========================
+   SEARCH
+   ========================= */
+
+.navbar .search-bar {
+    flex: 1 1 400px;
+    min-width: 0;
+    max-width: 620px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================
+   CREATE LISTING
+   ========================= */
+
+.navbar > .create-btn {
+    flex: 0 0 auto;
+
+    width: auto !important;
+    max-width: 145px;
+
+    white-space: normal;
+
+    text-align: center;
+}
+
+
+/* =========================
+   THEME BUTTON
+   ========================= */
+
+.navbar .theme-toggle {
+    flex: 0 0 auto;
+
+    width: 55px;
+    min-width: 55px;
+    height: 55px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+}
+
+
+/* =========================
+   LOGIN / SIGNUP
+   ========================= */
+
+.navbar .acc {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    min-width: 0;
+}
+
+.navbar .acc .create-btn {
+    flex: 0 0 auto;
+
+    width: auto !important;
+    max-width: 110px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   FILTER BAR
+   ========================= */
+
+.filter-bar {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    flex-wrap: nowrap;
+
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.filter {
+    flex: 0 0 auto;
+}
+
+
+/* =========================================
+   TABLET / MOBILE
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        display: grid;
+
+        grid-template-columns: 1fr auto;
+
+        gap: 10px;
+
+        padding: 12px 14px;
+
+        overflow: hidden;
+    }
+
+    .navbar .logo-link,
+    .navbar > img {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .navbar .logo-link img,
+    .navbar > img {
+        width: 165px;
+        max-width: 165px;
+    }
+
+    .navbar .search-bar {
+        grid-column: 1 / -1;
+        grid-row: 2;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        margin: 0;
+    }
+
+    .navbar > .create-btn {
+        grid-column: 1;
+        grid-row: 3;
+
+        justify-self: start;
+
+        max-width: 160px;
+
+        white-space: nowrap;
+    }
+
+    .navbar .theme-toggle {
+        grid-column: 2;
+        grid-row: 3;
+
+        width: 50px;
+        min-width: 50px;
+        height: 45px;
+
+        justify-self: end;
+    }
+
+    .navbar .acc {
+        grid-column: 2;
+        grid-row: 4;
+
+        justify-self: end;
+    }
+
+    .navbar .user-badge {
+        grid-column: 1;
+        grid-row: 4;
+
+        width: fit-content;
+        max-width: 180px;
+    }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 480px) {
+
+    .navbar {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .navbar .logo-link img,
+    .navbar > img {
+        width: 155px;
+        max-width: 155px;
+    }
+
+    .navbar .search-bar {
+        height: 48px;
+    }
+
+    .navbar .search-bar input {
+        min-width: 0;
+        font-size: 14px;
+    }
+
+    .navbar .search-bar button {
+        width: 48px;
+        min-width: 48px;
+    }
+
+    .navbar > .create-btn {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .navbar .acc .create-btn {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .filter-bar {
+        gap: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
